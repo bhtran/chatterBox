@@ -28,11 +28,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
-  override init() {
-    Firebase.defaultConfig().persistenceEnabled = true
-  }
-
+// The below line of code does not work because it was using Firebase 2.5.1
+//  override init() {
+//    Firebase.defaultConfig().persistenceEnabled = true
+//  }
+    
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    
+    FIRApp.configure()
+    
     return true
   }
 

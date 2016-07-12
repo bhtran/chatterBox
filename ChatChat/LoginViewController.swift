@@ -21,15 +21,44 @@
 */
 
 import UIKit
+import Firebase
+import FirebaseAuth
+
+
 class LoginViewController: UIViewController {
-  
+
+    // MARK: Properties
+    var ref: FIRAuth! // 1. First you specify a Firebase database reference as a property
+//    var ref: Firebase! **No longer in use**
+    
   override func viewDidLoad() {
     super.viewDidLoad()
+//    ref = Firebase(url: "https://<my-firebase-app>.firebaseio.com") // 2
+    ref = FIRAuth.auth()
   }
 
   @IBAction func loginDidTouch(sender: AnyObject) {
-
+    ref.signInAnonymouslyWithCompletion { (user, error) in
+        if error != nil {
+            print(error!.description); return }
+        
+        print(self.ref.currentUser?.displayName)
+        
+        self.performSegueWithIdentifier("LoginToChat", sender: self)
+    }
   }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        super.prepareForSegue(segue, sender: sender)
+        let navigationViewController = segue.destinationViewController as! UINavigationController
+        let chatViewController = navigationViewController.viewControllers.first as! ChatViewController
+        
+//        chatViewController.senderId = "SomeUserId"
+        chatViewController.senderId = ref.authData.uid
+        chatViewController.senderDisplayName = "Some User"
+
+        
+    }
   
 }
 
