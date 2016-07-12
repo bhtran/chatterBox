@@ -23,7 +23,7 @@
 import UIKit
 import Firebase
 import FirebaseAuth
-
+import FirebaseDatabase
 
 class LoginViewController: UIViewController {
 
@@ -35,6 +35,7 @@ class LoginViewController: UIViewController {
     super.viewDidLoad()
 //    ref = Firebase(url: "https://<my-firebase-app>.firebaseio.com") // 2
     ref = FIRAuth.auth()
+    
   }
 
   @IBAction func loginDidTouch(sender: AnyObject) {
@@ -53,11 +54,9 @@ class LoginViewController: UIViewController {
         let navigationViewController = segue.destinationViewController as! UINavigationController
         let chatViewController = navigationViewController.viewControllers.first as! ChatViewController
         
-//        chatViewController.senderId = "SomeUserId"
-        chatViewController.senderId = ref.authData.uid
+        chatViewController.senderId = "SomeUserId"
         chatViewController.senderDisplayName = "Some User"
 
-        
     }
   
 }
